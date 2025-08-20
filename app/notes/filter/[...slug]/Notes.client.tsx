@@ -16,28 +16,21 @@ import { fetchNotes } from '@/lib/api';
 
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 
-import type { FetchNotesResponse } from '@/lib/api';
-
 interface NotesClientProps {
-  initialData: FetchNotesResponse;
-  initialTag: string | undefined;
+  tag?: string;
 }
 
-export default function NotesClient({ initialData,initialTag }: NotesClientProps) {
+export default function NotesClient({ tag }: NotesClientProps) {
   const router = useRouter();
   const [searchValue, setSearchValue] = useState<string>('');
   const [debouncedSearchValue] = useDebounce(searchValue, 1000);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const { data, isFetching, isError, isSuccess } = useQuery({
-    queryKey: ['notes', debouncedSearchValue, currentPage, initialTag],
-    queryFn: () => fetchNotes(debouncedSearchValue, currentPage, initialTag),
+    queryKey: ['notes', debouncedSearchValue, currentPage, tag],
+    queryFn: () => fetchNotes(debouncedSearchValue, currentPage, tag),
     placeholderData: keepPreviousData,
-    refetchOnMount: false,
-    initialData:
-      debouncedSearchValue === '' && currentPage === 1
-        ? initialData
-        : undefined,
+    refetchOnMount: false,    
   });
 
   const handleSearch = (searchValue: string) => {

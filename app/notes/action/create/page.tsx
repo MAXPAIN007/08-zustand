@@ -5,10 +5,10 @@ import getBaseUrl from '@/lib/api';
 
 export const metadata: Metadata = {
   title: 'Create Note',
-  description: 'Create a new notice',
+  description: 'Create a new note',
   openGraph: {
     title: 'Create Note',
-    description: 'Create a new notice',
+    description: 'Create a new note',
     url: `${getBaseUrl()}/notes/action/create`,
     images: [
       {
